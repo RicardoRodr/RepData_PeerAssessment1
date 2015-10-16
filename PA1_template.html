@@ -161,6 +161,25 @@ median_steps_day</code></pre>
 ## 9  2012-10-09            0
 ## 10 2012-10-10            0
 ## ..        ...          ...</code></pre>
+<<<<<<< HEAD
+<pre class="r"><code>#Show the total mean of steps taken by day
+meantotal&lt;-summarize(total_steps_day,mean(sum_steps,na.rm=TRUE))
+meantotal</code></pre>
+<pre><code>## Source: local data frame [1 x 1]
+## 
+##   mean(sum_steps, na.rm = TRUE)
+##                           (dbl)
+## 1                      10766.19</code></pre>
+<pre class="r"><code>#Show the total median of steps taken by day
+mediantotal&lt;-summarize(total_steps_day,median(sum_steps,na.rm=TRUE))
+mediantotal</code></pre>
+<pre><code>## Source: local data frame [1 x 1]
+## 
+##   median(sum_steps, na.rm = TRUE)
+##                             (int)
+## 1                           10765</code></pre>
+=======
+>>>>>>> 8e5b844fe1124702e53ffbce1581a641c904a77c
 <p>Plot of the total number of steps taken by day:</p>
 <pre class="r"><code>#Plot the total steps by day
 histo&lt;-ggplot(total_steps_day,aes(x=sum_steps))

@@ -134,6 +134,37 @@ median_steps_day
 ## ..        ...          ...
 ```
 
+<<<<<<< HEAD
+```r
+#Show the total mean of steps taken by day
+meantotal<-summarize(total_steps_day,mean(sum_steps,na.rm=TRUE))
+meantotal
+```
+
+```
+## Source: local data frame [1 x 1]
+## 
+##   mean(sum_steps, na.rm = TRUE)
+##                           (dbl)
+## 1                      10766.19
+```
+
+```r
+#Show the total median of steps taken by day
+mediantotal<-summarize(total_steps_day,median(sum_steps,na.rm=TRUE))
+mediantotal
+```
+
+```
+## Source: local data frame [1 x 1]
+## 
+##   median(sum_steps, na.rm = TRUE)
+##                             (int)
+## 1                           10765
+```
+
+=======
+>>>>>>> 8e5b844fe1124702e53ffbce1581a641c904a77c
 Plot of the total number of steps taken by day:
 
 ```r

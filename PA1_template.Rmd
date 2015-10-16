@@ -65,6 +65,14 @@ mean_steps_day
 
 #Shows the median for each day
 median_steps_day
+
+#Show the total mean of steps taken by day
+meantotal<-summarize(total_steps_day,mean(sum_steps,na.rm=TRUE))
+meantotal
+
+#Show the total median of steps taken by day
+mediantotal<-summarize(total_steps_day,median(sum_steps,na.rm=TRUE))
+mediantotal
 ```
 
 Plot of the total number of steps taken by day:
