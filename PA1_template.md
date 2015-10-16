@@ -1,9 +1,4 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
 
 <<<<<<< HEAD
 This is an R Markdown document for the Peer Assignment 1 of the Reproducible Research course on Coursera. This assignment makes use of data from a personal activity monitoring device. This device collects data at 5 minute intervals through out the day. The data consists of two months of data from an anonymous individual collected during the months of October and November, 2012 and include the number of steps taken in 5 minute intervals each day.
@@ -28,17 +23,51 @@ The following is the code of the project and its corresponding output:
 
 ## Loading and preprocessing the data
 
-```{r, echo=TRUE}
+
+```r
 data<-read.csv(file="activity.csv")
 head(data,10)
+```
 
+```
+##    steps       date interval
+## 1     NA 2012-10-01        0
+## 2     NA 2012-10-01        5
+## 3     NA 2012-10-01       10
+## 4     NA 2012-10-01       15
+## 5     NA 2012-10-01       20
+## 6     NA 2012-10-01       25
+## 7     NA 2012-10-01       30
+## 8     NA 2012-10-01       35
+## 9     NA 2012-10-01       40
+## 10    NA 2012-10-01       45
+```
+
+```r
 #We convert the variable date into a proper date format
 data$date<-as.POSIXct(data$date,format="%Y-%m-%d")                        
 ```
 
 ## What is the mean total number of steps taken per day?
-```{r, echo=TRUE}
+
+```r
 library(dplyr)
+```
+
+```
+## 
+## Attaching package: 'dplyr'
+## 
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+## 
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+```
+
+```r
 library(ggplot2)
 
 #Groups data by date
@@ -62,13 +91,52 @@ median_steps_day<-rename(median_steps_day,median_steps=`median(steps, na.rm = TR
 
 #Shows the means for each day
 mean_steps_day
+```
 
+```
+## Source: local data frame [61 x 2]
+## 
+##          date mean_steps
+##        (time)      (dbl)
+## 1  2012-10-01        NaN
+## 2  2012-10-02    0.43750
+## 3  2012-10-03   39.41667
+## 4  2012-10-04   42.06944
+## 5  2012-10-05   46.15972
+## 6  2012-10-06   53.54167
+## 7  2012-10-07   38.24653
+## 8  2012-10-08        NaN
+## 9  2012-10-09   44.48264
+## 10 2012-10-10   34.37500
+## ..        ...        ...
+```
+
+```r
 #Shows the median for each day
 median_steps_day
 ```
 
+```
+## Source: local data frame [61 x 2]
+## 
+##          date median_steps
+##        (time)        (dbl)
+## 1  2012-10-01           NA
+## 2  2012-10-02            0
+## 3  2012-10-03            0
+## 4  2012-10-04            0
+## 5  2012-10-05            0
+## 6  2012-10-06            0
+## 7  2012-10-07            0
+## 8  2012-10-08           NA
+## 9  2012-10-09            0
+## 10 2012-10-10            0
+## ..        ...          ...
+```
+
 Plot of the total number of steps taken by day:
-```{r, echo=TRUE}
+
+```r
 #Plot the total steps by day
 histo<-ggplot(total_steps_day,aes(x=sum_steps))
 histo<-histo+geom_histogram(binwidth = 500, colour="black", fill="white")
@@ -76,8 +144,11 @@ histo<-histo + scale_x_continuous(breaks=seq(0,22500,1500))
 histo
 ```
 
+![](PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
+
 ## What is the average daily activity pattern?
-```{r, echo=TRUE}
+
+```r
 #Groups data by interval
 data_interval<-group_by(data,interval)
 
@@ -93,33 +164,52 @@ time<-time+geom_line(stat='identity',type='l')
 time
 ```
 
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png) 
+
 The maximum number of steps was:
-```{r, echo=TRUE}
+
+```r
 #Calculates and prints max steps
 max_steps<-max(mean_steps_interval$mean_steps)
 max_steps
 ```
 
+```
+## [1] 206.1698
+```
+
 The maximum number of steps was registered in the interval:
-```{r, echo=TRUE}
+
+```r
 #Prints the interval with the highest number of steps   
 mean_steps_interval$interval[which.max(mean_steps_interval$mean_steps)]
+```
 
+```
+## [1] 835
 ```
 
 ## Imputing missing values
 
 We will impute the missing values by using the means of the interval where the missing value is located across all the days.
-```{r, echo=TRUE}
+
+```r
 #Calculates the total number of NAs in the data
 missing<-data[is.na(data$steps)==TRUE,]
 ```
 
 The number of missing values is:
-```{r, echo=TRUE}
+
+```r
 #Reports the number of rows with missing values
 nrow(missing)
+```
 
+```
+## [1] 2304
+```
+
+```r
 #Creates means of steps taken by interval of the day for imputation
 data_impute<-group_by(data,interval)
 data_impute_means<-summarize(data_impute,mean(steps,na.rm=TRUE))
@@ -162,10 +252,50 @@ mean_steps_day2<-rename(mean_steps_day2,mean_steps=`mean(steps, na.rm = TRUE)`)
 
 #Shows the means for each day
 mean_steps_day2
+```
 
+```
+## Source: local data frame [61 x 2]
+## 
+##          date mean_steps
+##        (time)      (dbl)
+## 1  2012-10-01   37.38260
+## 2  2012-10-02    0.43750
+## 3  2012-10-03   39.41667
+## 4  2012-10-04   42.06944
+## 5  2012-10-05   46.15972
+## 6  2012-10-06   53.54167
+## 7  2012-10-07   38.24653
+## 8  2012-10-08   37.38260
+## 9  2012-10-09   44.48264
+## 10 2012-10-10   34.37500
+## ..        ...        ...
+```
+
+```r
 #Shows the median for each day
 median_steps_day2
+```
 
+```
+## Source: local data frame [61 x 2]
+## 
+##          date median(steps, na.rm = TRUE)
+##        (time)                       (dbl)
+## 1  2012-10-01                    34.11321
+## 2  2012-10-02                     0.00000
+## 3  2012-10-03                     0.00000
+## 4  2012-10-04                     0.00000
+## 5  2012-10-05                     0.00000
+## 6  2012-10-06                     0.00000
+## 7  2012-10-07                     0.00000
+## 8  2012-10-08                    34.11321
+## 9  2012-10-09                     0.00000
+## 10 2012-10-10                     0.00000
+## ..        ...                         ...
+```
+
+```r
 #Plot the total steps by day
 histo2<-ggplot(total_steps_day2,aes(x=sum_steps))
 histo2<-histo2+geom_histogram(binwidth = 500, colour="black", fill="white")
@@ -173,8 +303,11 @@ histo2<-histo2 + scale_x_continuous(breaks=seq(0,22500,1500))
 histo2
 ```
 
+![](PA1_template_files/figure-html/unnamed-chunk-8-1.png) 
+
 ## Are there differences in activity patterns between weekdays and weekends?
-```{r, echo=TRUE}
+
+```r
 #Adds the weekday variable, weekday by default
 data<-mutate(data, weekday="Weekday")
 
@@ -206,4 +339,6 @@ panel<-panel+facet_wrap(~weekday,nrow=2,ncol=1,shrink=FALSE)
 panel<-panel + scale_x_continuous(breaks=seq(0,2500,150))
 panel
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-9-1.png) 
 =======
